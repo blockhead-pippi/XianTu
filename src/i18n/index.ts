@@ -29,6 +29,7 @@ export function getOutputLanguageRule(mode: 'story' | 'world' = 'story'): string
     return [
       '# NGÔN NGỮ ĐẦU RA BẮT BUỘC (TIẾNG VIỆT — ƯU TIÊN CAO NHẤT)',
       '- Toàn bộ nội dung kể chuyện trong "text", tóm tắt "mid_term_memory", các lựa chọn "action_options", cũng như tên gọi/mô tả NPC, địa điểm, vật phẩm, công pháp, đại đạo, sự kiện và suy nghĩ nội tâm mới tạo PHẢI viết hoàn toàn bằng tiếng Việt (văn phong tiên hiệp Hán-Việt mượt mà, tự nhiên).',
+      '- Quy tắc xưng hô ngôi thứ 3 (BẮT BUỘC): dùng văn phong truyện tiên hiệp chuẩn — khi kể về nhân vật chính (nam) và các nhân vật nam, chỉ gọi thẳng tên hoặc dùng đại từ "hắn", "gã" (tuyệt đối KHÔNG dùng "chàng" hay giọng điệu ngôn tình/cổ trang sến). Với nhân vật chính là nữ, gọi thẳng tên hoặc "nàng"/"cô".',
       '- Tuyệt đối KHÔNG viết đoạn văn tiếng Trung trong "text", "mid_term_memory" hay "action_options".',
       '- Vẫn giữ nguyên cấu trúc JSON và tên key hệ thống của "tavern_commands" (tiền tố 元数据./角色./社交./世界./系统., action: set/add/push/delete, và các giá trị enum hệ thống như 凡人/练气/筑基/金丹/元婴/化神/炼虚/合体/渡劫 trong 境界.名称) để không làm lỗi dữ liệu game.',
     ].join('\n')
