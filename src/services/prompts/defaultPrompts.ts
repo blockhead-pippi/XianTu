@@ -11,6 +11,7 @@ import { getSaveDataStructureForEnv } from '@/utils/prompts/definitions/dataDefi
 import { CHARACTER_INIT_TASK_PROMPT } from '@/utils/prompts/tasks/characterInitializationPrompts';
 import { EnhancedWorldPromptBuilder } from '@/utils/worldGeneration/enhancedWorldPrompts';
 import { promptStorage } from './promptStorage';
+import { getOutputLanguageRule } from '@/i18n';
 import { isTavernEnv } from '@/utils/tavern';
 // 核心规则
 import { JSON_OUTPUT_RULES, RESPONSE_FORMAT_RULES, DATA_STRUCTURE_STRICTNESS, NARRATIVE_PURITY_RULES } from '@/utils/prompts/definitions/coreRules';
@@ -435,7 +436,7 @@ export function getSystemPrompts(): Record<string, PromptDefinition> {
     },
     splitGenerationStep1: {
       name: '9. 分步正文',
-      content: SPLIT_GENERATION_STEP1_PROMPT,
+      content: [SPLIT_GENERATION_STEP1_PROMPT, getOutputLanguageRule('story')].filter(Boolean).join('\n\n'),
       category: 'coreRequest',
       description: '分步模式第1步',
       order: 9,
@@ -453,7 +454,7 @@ export function getSystemPrompts(): Record<string, PromptDefinition> {
     },
     splitInitStep1: {
       name: '11. 开局正文',
-      content: SPLIT_INIT_STEP1_PROMPT,
+      content: [SPLIT_INIT_STEP1_PROMPT, getOutputLanguageRule('story')].filter(Boolean).join('\n\n'),
       category: 'coreRequest',
       description: '开局分步第1步',
       order: 11,

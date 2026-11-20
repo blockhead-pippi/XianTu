@@ -1,4 +1,5 @@
 ﻿import { WorldMapConfig } from '@/types/worldMap';
+import { getOutputLanguageRule } from '@/i18n';
 
 /**
  * 增强的世界生成提示词系统
@@ -194,6 +195,7 @@ ${buildWorldSettingLines(config)}
 3. 势力范围 ≥4 点且在所属大洲内；领导层与成员数量完整且数字自洽
 4. 所有坐标是整数并在 x ${minX}-${maxX}、y ${minY}-${maxY} 内
 5. 名称无重复、无禁用词根
+${getOutputLanguageRule('world') ? `\n${getOutputLanguageRule('world')}` : ''}
 `;
   }
 
@@ -245,6 +247,7 @@ x: ${minX}-${maxX}，y: ${minY}-${maxY}，整数；原点(${minX},${minY})在左
   "factions": [],
   "locations": []
 }
+${getOutputLanguageRule('world') ? `\n${getOutputLanguageRule('world')}` : ''}
 `;
   }
 }

@@ -80,13 +80,13 @@
           >
             <div class="cc-item-main">
               <span class="root-name-wrap">
-                <span class="cc-item-name">{{ getSpiritRootBaseName(root.name) }}</span>
+                <span class="cc-item-name">{{ $t(getSpiritRootBaseName(root.name)) }}</span>
                 <span
                   v-if="getSpiritRootTier(root)"
                   class="grade-chip"
                   :style="{ '--grade': gradeColor(getSpiritRootTier(root)) }"
                 >
-                  {{ getSpiritRootTier(root) }}
+                  {{ $t(getSpiritRootTier(root)) }}
                 </span>
               </span>
               <span class="cc-item-meta">{{ root.talent_cost }} {{ $t('点') }}</span>
@@ -114,12 +114,12 @@
                 class="element-btn"
                 :class="{ selected: customSpirit.type === type.key }"
                 :style="{ '--element': type.color }"
-                :title="`${type.name}：${type.desc}`"
+                :title="`${$t(type.name)}：${$t(type.desc)}`"
                 :aria-pressed="customSpirit.type === type.key"
                 @click="customSpirit.type = type.key"
               >
-                <span class="element-glyph">{{ type.name.charAt(0) }}</span>
-                <span v-if="type.name.length > 1" class="element-name">{{ type.name }}</span>
+                <span class="element-glyph">{{ $t(type.name).charAt(0) }}</span>
+                <span v-if="$t(type.name).length > 1" class="element-name">{{ $t(type.name) }}</span>
               </button>
             </div>
           </section>
@@ -137,7 +137,7 @@
                 :aria-pressed="customSpirit.tier === tier.key"
                 @click="customSpirit.tier = tier.key"
               >
-                <span class="grade-name">{{ tier.name }}</span>
+                <span class="grade-name">{{ $t(tier.name) }}</span>
                 <span class="grade-meta">{{ tier.multiplier }}x · {{ tier.cost }}{{ $t('点') }}</span>
               </button>
             </div>
@@ -145,13 +145,13 @@
 
           <section class="custom-preview">
             <div class="preview-head">
-              <span class="preview-name">{{ getCustomSpiritName() }}</span>
+              <span class="preview-name">{{ $t(getCustomSpiritName()) }}</span>
               <span
                 v-if="customSpirit.tier !== 'none'"
                 class="grade-chip"
                 :style="{ '--grade': gradeColor(customSpirit.tier) }"
               >
-                {{ getSpiritTierName(customSpirit.tier) }}
+                {{ $t(getSpiritTierName(customSpirit.tier)) }}
               </span>
             </div>
             <div class="preview-stats">
@@ -178,11 +178,11 @@
           class="cc-detail-inner"
         >
           <div class="cc-detail-head">
-            <h2 class="cc-detail-title">{{ getActiveDisplayName() }}</h2>
+            <h2 class="cc-detail-title">{{ $t(getActiveDisplayName()) }}</h2>
           </div>
           <div class="cc-detail-rule"></div>
           <div class="cc-detail-body">
-            <p>{{ getActiveDescription() }}</p>
+            <p>{{ $t(getActiveDescription()) }}</p>
           </div>
           <div class="cc-stat-row">
             <span class="cc-stat">{{ $t('修炼倍率') }} <strong>{{ getActiveMultiplier() }}x</strong></span>

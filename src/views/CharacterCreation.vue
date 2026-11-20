@@ -146,7 +146,7 @@
     <RedemptionCodeModal
       :visible="isCodeModalVisible"
       :type="currentAIType"
-      title="使用仙缘信物"
+      :title="$t('使用仙缘信物')"
       @close="isCodeModalVisible = false"
       @submit="handleCodeSubmit"
     />
@@ -399,6 +399,7 @@ const stepLabels = computed(() => [
 const chineseNumerals = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十'];
 
 const stepCounter = computed(() => {
+  if (currentLanguage.value === 'vi') return `Bước ${store.currentStep} / ${store.totalSteps}`;
   if (currentLanguage.value === 'en') return `Step ${store.currentStep} / ${store.totalSteps}`;
   return `第${chineseNumerals[store.currentStep - 1]}步 · 共${chineseNumerals[store.totalSteps - 1]}步`;
 });

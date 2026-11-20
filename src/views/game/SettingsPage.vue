@@ -243,6 +243,7 @@ const THEMES: { value: ThemePreference; label: string; icon: typeof Sun }[] = [
   { value: 'auto', label: '跟随系统', icon: Monitor },
 ];
 const LANGS = [
+  { value: 'vi', label: 'Tiếng Việt' },
   { value: 'zh', label: '中文' },
   { value: 'en', label: 'English' },
 ] as const;
@@ -269,11 +270,11 @@ const tabs = computed(() => [
   { key: 'advanced', label: '高级', count: s.enabledRuleCount.value || null },
 ]);
 
-const { setLanguage, currentLanguage: lang } = useI18n();
-const changeLanguage = (v: 'zh' | 'en') => {
+const { t, setLanguage, currentLanguage: lang } = useI18n();
+const changeLanguage = (v: 'zh' | 'en' | 'vi') => {
   if (lang.value === v) return;
   setLanguage(v);
-  toast.success('语言设置已更新');
+  toast.success(t('语言设置已更新'));
 };
 
 const newName = ref('');

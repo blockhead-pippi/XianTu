@@ -1,4 +1,5 @@
 import { getPrompt } from '@/services/defaultPrompts';
+import { getOutputLanguageRule } from '@/i18n';
 import { SAVE_DATA_STRUCTURE, stripNsfwContent } from './definitions/dataDefinitions';
 import { isTavernEnv } from '@/utils/tavern';
 import { getNsfwSettingsFromStorage } from '@/utils/nsfw';
@@ -113,6 +114,11 @@ export async function assembleSystemPrompt(
         '- 性行为、敏感与开发度不要写入仪容',
       ].join('\n')
     );
+  }
+
+  const languageRule = getOutputLanguageRule('story');
+  if (languageRule) {
+    promptSections.push(languageRule);
   }
 
   const normalizedSections = promptSections

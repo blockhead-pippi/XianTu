@@ -76,11 +76,11 @@
             </li>
           </ol>
 
-          <section class="preview" aria-label="实时预览">
+          <section class="preview" :aria-label="t('实时预览')">
             <div class="preview-head">
-              <span class="preview-title">天机显化</span>
-              <span v-if="previewMode === 'commands' && commands.length" class="preview-meta">{{ commands.length }} 条指令</span>
-              <span v-else-if="streamLength > 0" class="preview-meta">已接收 {{ streamLength.toLocaleString() }} 字</span>
+              <span class="preview-title">{{ t('天机显化') }}</span>
+              <span v-if="previewMode === 'commands' && commands.length" class="preview-meta">{{ commands.length }}</span>
+              <span v-else-if="streamLength > 0" class="preview-meta">{{ streamLength.toLocaleString() }} {{ t('字') }}</span>
             </div>
 
             <!-- 世界：已成形的大陆 / 势力 / 地点 -->
@@ -88,7 +88,7 @@
               <div v-for="group in worldGroups" :key="group.key" class="world-group">
                 <div class="world-group-head">
                   <component :is="group.icon" :size="14" />
-                  <span>{{ group.label }}</span>
+                  <span>{{ t(group.label) }}</span>
                   <span class="world-count">
                     <strong>{{ group.names.length }}</strong><template v-if="group.target"> / {{ group.target }}</template>
                   </span>
@@ -96,7 +96,7 @@
                 <TransitionGroup v-if="group.names.length" name="chip" tag="div" class="chips">
                   <span v-for="name in group.names" :key="name" class="chip">{{ name }}</span>
                 </TransitionGroup>
-                <div v-else class="chips-empty">尚未显现…</div>
+                <div v-else class="chips-empty">{{ t('尚未显现…') }}</div>
               </div>
             </div>
 
@@ -142,20 +142,20 @@
         <footer class="stage-footer">
           <p class="footer-tip">
             <Info :size="13" />
-            <span>AI 生成通常需要 1–3 分钟，请勿刷新或关闭页面</span>
+            <span>{{ t('AI 生成通常需要 1–3 分钟，请勿刷新或关闭页面') }}</span>
           </p>
           <div v-if="uiStore.loadingCancelling" class="cancel-area">
-            <span class="cancelling"><span class="marker-ring"></span>正在取消…</span>
+            <span class="cancelling"><span class="marker-ring"></span>{{ t('正在取消…') }}</span>
           </div>
           <div v-else-if="uiStore.canCancelLoading" class="cancel-area">
             <template v-if="confirmingCancel">
-              <span class="confirm-text">放弃本次生成？</span>
-              <button type="button" class="cc-btn small" @click="confirmingCancel = false">继续等待</button>
-              <button type="button" class="cc-btn small danger" @click="confirmCancel">确认取消</button>
+              <span class="confirm-text">{{ t('放弃本次生成？') }}</span>
+              <button type="button" class="cc-btn small" @click="confirmingCancel = false">{{ t('继续等待') }}</button>
+              <button type="button" class="cc-btn small danger" @click="confirmCancel">{{ t('确认取消') }}</button>
             </template>
             <button v-else type="button" class="cc-btn small" @click="confirmingCancel = true">
               <CircleStop :size="14" />
-              取消生成
+              {{ t('取消生成') }}
             </button>
           </div>
         </footer>
@@ -174,8 +174,10 @@
 import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue';
 import { Castle, Check, CircleStop, Info, Map as MapIcon, MapPin, Timer, X } from 'lucide-vue-next';
 import { useUIStore } from '@/stores/uiStore';
+import { useI18n } from '@/i18n';
 import { extractCommandPreview, extractStoryPreview, extractWorldEntities } from '@/utils/loadingPreview';
 
+const { t } = useI18n();
 const uiStore = useUIStore();
 
 const stages = computed(() => uiStore.loadingStages);

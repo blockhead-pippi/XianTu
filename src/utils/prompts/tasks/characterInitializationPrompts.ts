@@ -11,6 +11,7 @@ import type { WorldInfo, WorldMapConfig, SystemConfig } from '@/types/game';
 import { stripNsfwContent } from '../definitions/dataDefinitions';
 import { assembleSystemPrompt } from '../promptAssembler';
 import { getPrompt } from '@/services/defaultPrompts';
+import { getOutputLanguageRule, useI18n } from '@/i18n';
 import { isTavernEnv } from '@/utils/tavern';
 
 // =====================================================================
@@ -127,11 +128,12 @@ export function buildCharacterSelectionsSummary(
 ): string {
   const { name, gender, race, age, world, talentTier, origin, spiritRoot, talents, attributes, difficultyPrompt } = userSelections;
 
+  const { t } = useI18n();
   const originIsObj = typeof origin === 'object' && origin !== null;
   const spiritRootIsObj = typeof spiritRoot === 'object' && spiritRoot !== null;
 
   const talentsList = talents.length > 0
-    ? talents.map(t => `- ${t.name}: ${t.description}`).join('\n')
+    ? talents.map(item => `- ${t(item.name)}: ${item.description ? t(item.description) : ''}`).join('\n')
     : '无';
 
   const attrList = Object.entries(attributes).map(([k, v]) => `${k}:${v}`).join(', ');
@@ -155,17 +157,17 @@ export function buildCharacterSelectionsSummary(
 姓名: ${name} | 性别: ${gender} | 种族: ${race} | 年龄: ${age}岁
 
 ## 世界
-${world.name} (${world.era})
-${world.description}
+${t(world.name)} (${world.era ? t(world.era) : ''})
+${world.description ? t(world.description) : ''}
 
 ## 天资
-${talentTier.name}: ${talentTier.description}
+${t(talentTier.name)}: ${talentTier.description ? t(talentTier.description) : ''}
 
 ## 出身
-${originIsObj ? (origin as Origin).name : origin}: ${originIsObj ? (origin as Origin).description : '(随机，需AI生成)'}
+${originIsObj ? t((origin as Origin).name) : t(origin)}: ${originIsObj ? t((origin as Origin).description || '') : '(随机，需AI生成)'}
 
 ## 灵根
-${spiritRootIsObj ? `${(spiritRoot as SpiritRoot).name} (${(spiritRoot as SpiritRoot).tier})` : spiritRoot}: ${spiritRootIsObj ? (spiritRoot as SpiritRoot).description : '(随机，需AI生成)'}
+${spiritRootIsObj ? `${t((spiritRoot as SpiritRoot).name)} (${t((spiritRoot as SpiritRoot).tier || '')})` : t(spiritRoot)}: ${spiritRootIsObj ? t((spiritRoot as SpiritRoot).description || '') : '(随机，需AI生成)'}
 
 ## 天赋
 ${talentsList}
@@ -211,6 +213,7 @@ export async function buildCharacterInitializationPrompt(): Promise<string> {
     basePrompt,
     taskPrompt.trim() || CHARACTER_INIT_TASK_PROMPT,
     tavernEnv ? TAVERN_BODY_RULES : '',
+    getOutputLanguageRule('story'),
   ].filter(Boolean);
 
   const prompt = sections.join('\n\n---\n\n');

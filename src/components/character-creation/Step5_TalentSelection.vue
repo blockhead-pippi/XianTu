@@ -41,7 +41,7 @@
               <Check :size="11" :stroke-width="3.5" />
             </span>
             <div class="cc-item-main">
-              <span class="cc-item-name">{{ talent.name }}</span>
+              <span class="cc-item-name">{{ $t(talent.name) }}</span>
               <span class="cc-item-meta">{{ talent.talent_cost || 0 }} {{ $t('点') }}</span>
             </div>
             <div v-if="(talent.source === 'cloud' || talent.source === 'local') && store.isLocalCreation" class="cc-item-tools">
@@ -60,12 +60,12 @@
       <div class="cc-panel cc-detail">
         <div v-if="activeTalent" class="cc-detail-inner">
           <div class="cc-detail-head">
-            <h2 class="cc-detail-title">{{ activeTalent.name }}</h2>
+            <h2 class="cc-detail-title">{{ $t(activeTalent.name) }}</h2>
             <span v-if="isSelected(activeTalent)" class="picked-seal">{{ $t('已选') }}</span>
           </div>
           <div class="cc-detail-rule"></div>
           <div class="cc-detail-body">
-            <p>{{ activeTalent.description || $t('此天赋之玄妙，需自行领悟。') }}</p>
+            <p>{{ activeTalent.description ? $t(activeTalent.description) : $t('此天赋之玄妙，需自行领悟。') }}</p>
           </div>
           <div class="cc-stat-row">
             <span class="cc-stat">{{ $t('消耗天道点') }} <strong>{{ activeTalent.talent_cost || 0 }}</strong></span>

@@ -1,8 +1,8 @@
 <template>
-  <nav class="nav" :class="{ 'lang-en': currentLanguage === 'en' }" :aria-label="t('游戏功能')">
+  <nav class="nav" :class="{ 'lang-en': currentLanguage !== 'zh' }" :aria-label="t('游戏功能')">
     <div class="nav-scroll">
       <section v-for="section in navSections" :key="section.title" class="nav-group">
-        <h3 class="nav-group-title" :title="t(section.title)"><span>{{ currentLanguage === 'en' ? t(section.title) : section.short }}</span></h3>
+        <h3 class="nav-group-title" :title="t(section.title)"><span>{{ currentLanguage !== 'zh' ? t(section.title) : section.short }}</span></h3>
         <ul class="nav-list">
           <li v-for="item in section.items" :key="item.key">
             <button

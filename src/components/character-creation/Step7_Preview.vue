@@ -119,8 +119,8 @@
       <div class="fate-grid">
         <article class="fate-card">
           <span class="fate-label">{{ $t('所选世界') }}</span>
-          <h4 class="fate-name">{{ store.selectedWorld?.name || $t('未选择') }}</h4>
-          <p class="fate-desc">{{ store.selectedWorld?.description || $t('暂无描述') }}</p>
+          <h4 class="fate-name">{{ store.selectedWorld?.name ? $t(store.selectedWorld.name) : $t('未选择') }}</h4>
+          <p class="fate-desc">{{ store.selectedWorld?.description ? $t(store.selectedWorld.description) : $t('暂无描述') }}</p>
         </article>
 
         <article
@@ -128,28 +128,28 @@
           :style="{ '--tier-color': store.selectedTalentTier?.color || 'var(--cc-text)' }"
         >
           <span class="fate-label">{{ $t('天资') }}</span>
-          <h4 class="fate-name">{{ store.selectedTalentTier?.name || $t('未选择') }}</h4>
-          <p class="fate-desc">{{ store.selectedTalentTier?.description || $t('暂无描述') }}</p>
+          <h4 class="fate-name">{{ store.selectedTalentTier?.name ? $t(store.selectedTalentTier.name) : $t('未选择') }}</h4>
+          <p class="fate-desc">{{ store.selectedTalentTier?.description ? $t(store.selectedTalentTier.description) : $t('暂无描述') }}</p>
         </article>
 
         <article class="fate-card">
           <span class="fate-label">{{ $t('出身') }}</span>
-          <h4 class="fate-name">{{ store.selectedOrigin?.name || $t('随机出身') }}</h4>
-          <p class="fate-desc">{{ store.selectedOrigin?.description || $t('暂无描述') }}</p>
+          <h4 class="fate-name">{{ store.selectedOrigin?.name ? $t(store.selectedOrigin.name) : $t('随机出身') }}</h4>
+          <p class="fate-desc">{{ store.selectedOrigin?.description ? $t(store.selectedOrigin.description) : $t('暂无描述') }}</p>
         </article>
 
         <article class="fate-card">
           <span class="fate-label">{{ $t('灵根') }}</span>
-          <h4 class="fate-name">{{ store.selectedSpiritRoot?.name || $t('随机灵根') }}</h4>
-          <p class="fate-desc">{{ store.selectedSpiritRoot?.description || $t('暂无描述') }}</p>
+          <h4 class="fate-name">{{ store.selectedSpiritRoot?.name ? $t(store.selectedSpiritRoot.name) : $t('随机灵根') }}</h4>
+          <p class="fate-desc">{{ store.selectedSpiritRoot?.description ? $t(store.selectedSpiritRoot.description) : $t('暂无描述') }}</p>
         </article>
 
         <article class="fate-card wide">
           <span class="fate-label">{{ $t('天赋') }}</span>
           <ul v-if="store.selectedTalents.length" class="talent-list">
             <li v-for="talent in store.selectedTalents" :key="talent.id">
-              <strong>{{ talent.name }}</strong>
-              <span>{{ talent.description }}</span>
+              <strong>{{ $t(talent.name) }}</strong>
+              <span>{{ talent.description ? $t(talent.description) : '' }}</span>
             </li>
           </ul>
           <p v-else class="fate-desc">{{ $t('未选择任何天赋') }}</p>

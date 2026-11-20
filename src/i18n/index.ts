@@ -1,15 +1,46 @@
 import { ref } from 'vue'
+import { viTranslateMap } from './vi'
 
-export type Language = 'zh' | 'en'
+export type Language = 'zh' | 'en' | 'vi'
 
-// 初始化语言设置，默认中文
+// 初始化语言设置，默认越南语 (Tiếng Việt)
 const savedLanguage = localStorage.getItem('language') as Language
-const initialLanguage: Language = (savedLanguage === 'zh' || savedLanguage === 'en') ? savedLanguage : 'zh'
+const initialLanguage: Language =
+  savedLanguage === 'zh' || savedLanguage === 'en' || savedLanguage === 'vi' ? savedLanguage : 'vi'
 // 如果没有保存过语言设置，保存默认值
 if (!savedLanguage) {
-  localStorage.setItem('language', 'zh')
+  localStorage.setItem('language', initialLanguage)
 }
 const currentLanguage = ref<Language>(initialLanguage)
+
+export function getCurrentLanguage(): Language {
+  return currentLanguage.value
+}
+
+export function getOutputLanguageRule(mode: 'story' | 'world' = 'story'): string {
+  if (currentLanguage.value === 'vi') {
+    if (mode === 'world') {
+      return [
+        '## NGÔN NGỮ ĐẦU RA BẮT BUỘC (TIẾNG VIỆT)',
+        '- Giữ nguyên tên các key JSON theo đúng mẫu ("名称", "描述", "气候", "地理特征", "天然屏障", "大洲边界", "主要势力", "领导层", "成员数量"...).',
+        '- Toàn bộ giá trị nội dung như tên đại lục, tên thế lực, tên địa điểm, tên tông chủ/phó tông chủ, mô tả, khí hậu, đặc trưng địa lý, chướng ngại tự nhiên PHẢI viết bằng tiếng Việt (phong cách tiên hiệp Hán-Việt, ví dụ: "Huyền Thiên Đại Lục", "Thanh Vân Tông", "Lạc Hà Trấn").',
+      ].join('\n')
+    }
+    return [
+      '# NGÔN NGỮ ĐẦU RA BẮT BUỘC (TIẾNG VIỆT — ƯU TIÊN CAO NHẤT)',
+      '- Toàn bộ nội dung kể chuyện trong "text", tóm tắt "mid_term_memory", các lựa chọn "action_options", cũng như tên gọi/mô tả NPC, địa điểm, vật phẩm, công pháp, đại đạo, sự kiện và suy nghĩ nội tâm mới tạo PHẢI viết hoàn toàn bằng tiếng Việt (văn phong tiên hiệp Hán-Việt mượt mà, tự nhiên).',
+      '- Tuyệt đối KHÔNG viết đoạn văn tiếng Trung trong "text", "mid_term_memory" hay "action_options".',
+      '- Vẫn giữ nguyên cấu trúc JSON và tên key hệ thống của "tavern_commands" (tiền tố 元数据./角色./社交./世界./系统., action: set/add/push/delete, và các giá trị enum hệ thống như 凡人/练气/筑基/金丹/元婴/化神/炼虚/合体/渡劫 trong 境界.名称) để không làm lỗi dữ liệu game.',
+    ].join('\n')
+  }
+  if (currentLanguage.value === 'en') {
+    if (mode === 'world') {
+      return '## OUTPUT LANGUAGE REQUIREMENT\n- Keep JSON keys exactly as shown in the schema, and write all generated names and descriptions in natural English.'
+    }
+    return '# OUTPUT LANGUAGE REQUIREMENT\n- Write all narrative prose ("text"), "mid_term_memory", and "action_options" in natural English while preserving JSON keys and system command paths.'
+  }
+  return ''
+}
 
 const applyLanguageToDocument = (lang: Language) => {
   if (typeof document === 'undefined') return
@@ -1382,13 +1413,18 @@ const autoTranslateMap: Record<string, string> = {
 
 export function useI18n() {
   const t = (key: string, params?: Record<string, any>): string => {
-    let translation = currentLanguage.value === 'zh' ? key : (autoTranslateMap[key] || key);
+    let translation = key
+    if (currentLanguage.value === 'vi') {
+      translation = viTranslateMap[key] || autoTranslateMap[key] || key
+    } else if (currentLanguage.value === 'en') {
+      translation = autoTranslateMap[key] || key
+    }
     if (params) {
       for (const param in params) {
-        translation = translation.replace(`{${param}}`, String(params[param]));
+        translation = translation.replace(`{${param}}`, String(params[param]))
       }
     }
-    return translation;
+    return translation
   }
 
   const setLanguage = (lang: Language) => {

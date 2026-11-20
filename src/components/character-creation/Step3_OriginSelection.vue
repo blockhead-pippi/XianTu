@@ -54,7 +54,7 @@
             @focus="activeOrigin = origin"
           >
             <div class="cc-item-main">
-              <span class="cc-item-name">{{ origin.name }}</span>
+              <span class="cc-item-name">{{ $t(origin.name) }}</span>
               <span class="cc-item-meta">{{ origin.talent_cost }} {{ $t('点') }}</span>
             </div>
             <div v-if="origin.source === 'cloud' && store.isLocalCreation" class="cc-item-tools">
@@ -73,11 +73,11 @@
       <div class="cc-panel cc-detail">
         <div v-if="activeOrigin" class="cc-detail-inner">
           <div class="cc-detail-head">
-            <h2 class="cc-detail-title">{{ activeDisplayName }}</h2>
+            <h2 class="cc-detail-title">{{ $t(activeDisplayName) }}</h2>
           </div>
           <div class="cc-detail-rule"></div>
           <div class="cc-detail-body">
-            <p>{{ activeDescription }}</p>
+            <p>{{ $t(activeDescription) }}</p>
           </div>
           <div class="cc-stat-row">
             <span class="cc-stat">{{ $t('消耗天道点') }} <strong>{{ activeCost }}</strong></span>

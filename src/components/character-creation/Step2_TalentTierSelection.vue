@@ -34,7 +34,7 @@
             <div class="cc-item-main">
               <span class="tier-name-wrap">
                 <span class="tier-gem" aria-hidden="true"></span>
-                <span class="cc-item-name tier-name">{{ tier.name }}</span>
+                <span class="cc-item-name tier-name">{{ $t(tier.name) }}</span>
               </span>
               <span class="cc-item-meta">{{ tier.total_points }} {{ $t('点') }}</span>
             </div>
@@ -58,11 +58,11 @@
           :style="{ '--tier-color': activeTier.color || 'var(--cc-accent)' }"
         >
           <div class="cc-detail-head">
-            <h2 class="cc-detail-title tier-title">{{ activeTier.name }}</h2>
+            <h2 class="cc-detail-title tier-title">{{ $t(activeTier.name) }}</h2>
           </div>
           <div class="cc-detail-rule"></div>
           <div class="cc-detail-body">
-            <p>{{ activeTier.description }}</p>
+            <p>{{ $t(activeTier.description) }}</p>
           </div>
           <div class="cc-stat-row">
             <span class="cc-stat">{{ $t('天道点') }} <strong>{{ activeTier.total_points }}</strong></span>

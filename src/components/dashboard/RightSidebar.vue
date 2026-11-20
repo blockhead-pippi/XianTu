@@ -52,7 +52,7 @@
             <img class="status-icon-image reputation-icon" :src="reputationIcon" alt="" aria-hidden="true" draggable="false" />
             {{ t('声望') }}
           </span>
-          <strong :class="getReputationClass()">{{ reputationTitle }}</strong>
+          <strong :class="getReputationClass()">{{ t(reputationTitle) }}</strong>
           <i v-if="reputationValue !== null">{{ reputationValue }}</i>
         </div>
       </section>
@@ -81,7 +81,7 @@
             :title="name"
             @click="showTalentDetail(name)"
           >
-            {{ name }}
+            {{ t(name) }}
           </button>
         </div>
       </section>
@@ -190,7 +190,7 @@ const nameOf = (v: unknown): string => {
 const identityLine = computed(() => {
   const info = characterInfo.value as any;
   if (!info) return '';
-  return [nameOf(info.灵根), nameOf(info.天资)].filter(Boolean).join(' · ');
+  return [nameOf(info.灵根), nameOf(info.天资)].filter(Boolean).map((s) => t(s)).join(' · ');
 });
 
 const isBuff = (effect: StatusEffect) => String(effect.类型 || '').toLowerCase() === 'buff';

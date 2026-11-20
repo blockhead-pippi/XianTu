@@ -42,14 +42,14 @@
           >
             <div class="cc-item-main">
               <div class="world-item-heading">
-                <span class="cc-item-name">{{ world.name }}</span>
+                <span class="cc-item-name">{{ $t(world.name) }}</span>
                 <span class="cc-item-check" aria-hidden="true"><Check :size="11" :stroke-width="3" /></span>
               </div>
-              <p class="world-item-summary">{{ getWorldSummary(world) }}</p>
+              <p class="world-item-summary">{{ $t(getWorldSummary(world)) }}</p>
               <div class="world-item-meta">
-                <span class="world-item-era">{{ world.era || $t('时代未知') }}</span>
-                <span class="world-item-type">{{ getWorldProfile(world).type }}</span>
-                <span class="world-item-focus">{{ getWorldProfile(world).focus }}</span>
+                <span class="world-item-era">{{ world.era ? $t(world.era) : $t('时代未知') }}</span>
+                <span class="world-item-type">{{ $t(getWorldProfile(world).type) }}</span>
+                <span class="world-item-focus">{{ $t(getWorldProfile(world).focus) }}</span>
               </div>
             </div>
             <div v-if="world.source === 'cloud' && store.isLocalCreation" class="cc-item-tools">
@@ -69,11 +69,11 @@
         <div v-if="activeWorld" class="cc-detail-inner">
           <div class="cc-detail-head">
             <div class="title-block">
-              <h2 class="cc-detail-title">{{ activeWorld.name }}</h2>
-              <p class="cc-detail-sub">【{{ activeWorld.era || $t('时代未知') }}】</p>
+              <h2 class="cc-detail-title">{{ $t(activeWorld.name) }}</h2>
+              <p class="cc-detail-sub">【{{ activeWorld.era ? $t(activeWorld.era) : $t('时代未知') }}】</p>
               <div class="world-detail-meta">
-                <span>{{ getWorldProfile(activeWorld).type }}</span>
-                <span>{{ getWorldProfile(activeWorld).focus }}</span>
+                <span>{{ $t(getWorldProfile(activeWorld).type) }}</span>
+                <span>{{ $t(getWorldProfile(activeWorld).focus) }}</span>
                 <span>{{ activeWorld.source === 'cloud' ? $t('云端数据') : $t('本地预设') }}</span>
               </div>
             </div>
@@ -193,7 +193,7 @@
           </div>
 
           <div class="cc-detail-body" v-show="!showMapOptions">
-            <p>{{ activeWorld.description || $t('此界一片混沌，尚无描述。') }}</p>
+            <p>{{ activeWorld.description ? $t(activeWorld.description) : $t('此界一片混沌，尚无描述。') }}</p>
           </div>
         </div>
         <div v-else class="cc-placeholder">

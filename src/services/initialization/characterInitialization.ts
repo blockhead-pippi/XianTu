@@ -17,6 +17,7 @@ import { isTavernEnv } from '@/utils/tavern';
 import { getNsfwSettingsFromStorage, ensureSystemConfigHasNsfw } from '@/utils/nsfw';
 import { createEmptyThousandDaoSystem } from '@/data/thousandDaoData';
 import { buildCharacterInitializationPrompt, buildCharacterSelectionsSummary } from '@/utils/prompts/tasks/characterInitializationPrompts';
+import { getCurrentLanguage } from '@/i18n';
 import { validateGameData } from '@/utils/dataValidation';
 import { repairSaveData } from '@/utils/dataRepair';
 import { migrateSaveDataToLatest } from '@/utils/saveMigration';
@@ -513,6 +514,12 @@ async function generateOpeningScene(saveData: SaveData, baseInfo: CharacterBaseI
   const systemPrompt = await buildCharacterInitializationPrompt();
   const selectionsSummary = buildCharacterSelectionsSummary(userSelections, worldContext);
 
+  const langHint = getCurrentLanguage() === 'vi'
+    ? '\n- BẮT BUỘC viết toàn bộ câu chuyện mở đầu (text), tóm tắt (mid_term_memory), 5 lựa chọn hành động (action_options), và tên/mô tả NPC, địa điểm, vật phẩm bằng tiếng Việt (phong cách tiên hiệp Hán-Việt tự nhiên).'
+    : getCurrentLanguage() === 'en'
+      ? '\n- Write the opening narrative (text), mid_term_memory, and 5 action_options in natural English.'
+      : '';
+
   const userPrompt = `我创建了角色"${baseInfo.名字}"，请根据我的选择生成开局故事和初始数据。
 
 ${selectionsSummary}
@@ -521,7 +528,7 @@ ${selectionsSummary}
 - 严格按照我的角色设定来生成内容
 - 我选择的是什么样的出身、天赋、灵根，你就如实展现
 - 不要强加任何预设的剧情方向或生活方式
-- 这只是一个开始，我的人生我做主`;
+- 这只是一个开始，我的人生我做主${langHint}`;
 
   console.log(`[初始化] 准备生成开场剧情，角色: ${baseInfo.名字}`);
   console.log(`[初始化] 可用大陆列表:`, worldContext.availableContinents.map((c: any) => c.名称));

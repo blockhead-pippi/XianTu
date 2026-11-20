@@ -62,50 +62,50 @@
     -->
 
     <!-- 全局操作按钮（合并菜单） - 只在非游戏界面显示 -->
-    <ActionMenu v-if="!isInGameView" position="top-right" openTitle="功能" closeTitle="关闭">
+    <ActionMenu v-if="!isInGameView" position="top-right" :openTitle="$t('功能')" :closeTitle="$t('关闭')">
       <template #menu="{ close }">
         <button class="action-menu-item" @click="showSettingsModal = true; close()">
           <Settings :size="18" />
-          <span>全局设置</span>
+          <span>{{ $t('全局设置') }}</span>
         </button>
         <button class="action-menu-item" @click="showAPIModal = true; close()">
           <Plug :size="18" />
-          <span>API管理</span>
+          <span>{{ $t('API管理') }}</span>
         </button>
         <button class="action-menu-item" @click="showPromptModal = true; close()">
           <FileText :size="18" />
-          <span>提示词管理</span>
+          <span>{{ $t('提示词管理') }}</span>
         </button>
         <div class="action-menu-divider" role="separator"></div>
         <button class="action-menu-item" :class="{ 'is-disabled': !backendReady }" @click="openWorkshop(close)">
           <Store :size="18" />
-          <span>创意工坊</span>
+          <span>{{ $t('创意工坊') }}</span>
         </button>
         <button class="action-menu-item" :class="{ 'is-disabled': !backendReady }" @click="openAccountCenter(close)">
           <UserCircle :size="18" />
-          <span>账号中心</span>
+          <span>{{ $t('账号中心') }}</span>
         </button>
         <button class="action-menu-item" :class="{ 'is-disabled': !backendReady }" @click="openLeaderboard(close)">
           <Trophy :size="18" />
-          <span>额度排行</span>
+          <span>{{ $t('额度排行') }}</span>
         </button>
         <div class="action-menu-divider" role="separator"></div>
         <button class="action-menu-item" @click="toggleTheme(); close()">
           <component :is="isDark ? Sun : Moon" :size="18" />
-          <span>{{ isDark ? '切换亮色' : '切换暗色' }}</span>
+          <span>{{ isDark ? $t('切换亮色') : $t('切换暗色') }}</span>
         </button>
         <button class="action-menu-item" @click="toggleFullscreen(); close()">
           <component :is="isFullscreenMode ? Minimize2 : Maximize2" :size="18" />
-          <span>{{ isFullscreenMode ? '退出全屏' : '进入全屏' }}</span>
+          <span>{{ isFullscreenMode ? $t('退出全屏') : $t('进入全屏') }}</span>
         </button>
         <div class="action-menu-divider" role="separator"></div>
         <button class="action-menu-item" @click="showHelp(); close()">
           <BookOpen :size="18" />
-          <span>教程说明</span>
+          <span>{{ $t('教程说明') }}</span>
         </button>
         <button class="action-menu-item sponsor-item" @click="showSponsorModal = true; close()">
           <Heart :size="18" />
-          <span>赞助支持</span>
+          <span>{{ $t('赞助支持') }}</span>
         </button>
       </template>
     </ActionMenu>
@@ -157,23 +157,23 @@
 
     <!-- 赞助支持弹窗 -->
     <div v-if="showSponsorModal" class="cc-modal-overlay app-dialog" @click.self="showSponsorModal = false">
-      <div class="cc-modal sponsor-modal" role="dialog" aria-modal="true" aria-label="赞助支持">
+      <div class="cc-modal sponsor-modal" role="dialog" aria-modal="true" :aria-label="$t('赞助支持')">
         <div class="cc-modal-head">
-          <h3 class="cc-modal-title">赞助支持</h3>
-          <button type="button" class="cc-modal-close" aria-label="关闭" @click="showSponsorModal = false">
+          <h3 class="cc-modal-title">{{ $t('赞助支持') }}</h3>
+          <button type="button" class="cc-modal-close" :aria-label="$t('关闭')" @click="showSponsorModal = false">
             <X :size="18" />
           </button>
         </div>
         <div class="cc-modal-body">
-          <p class="cc-hint sponsor-hint">完全自愿，不影响任何游戏内容。感谢道友护持仙途。</p>
+          <p class="cc-hint sponsor-hint">{{ $t('完全自愿，不影响任何游戏内容。感谢道友护持仙途。') }}</p>
           <div class="sponsor-grid">
             <figure class="sponsor-qr">
-              <img src="https://ddct.top/zhifubao.jpg" alt="支付宝赞助二维码" loading="lazy" />
-              <figcaption>支付宝</figcaption>
+              <img src="https://ddct.top/zhifubao.jpg" :alt="$t('支付宝赞助二维码')" loading="lazy" />
+              <figcaption>{{ $t('支付宝') }}</figcaption>
             </figure>
             <figure class="sponsor-qr">
-              <img src="https://ddct.top/weixing.jpg" alt="微信赞助二维码" loading="lazy" />
-              <figcaption>微信</figcaption>
+              <img src="https://ddct.top/weixing.jpg" :alt="$t('微信赞助二维码')" loading="lazy" />
+              <figcaption>{{ $t('微信') }}</figcaption>
             </figure>
           </div>
         </div>
@@ -182,10 +182,10 @@
 
     <!-- 教程弹窗 -->
     <div v-if="showAuthorModal" class="cc-modal-overlay app-dialog" @click.self="showAuthorModal = false">
-      <div class="cc-modal help-modal" role="dialog" aria-modal="true" aria-label="仙途教程">
+      <div class="cc-modal help-modal" role="dialog" aria-modal="true" :aria-label="$t('仙途教程')">
         <div class="cc-modal-head">
-          <h3 class="cc-modal-title">仙途教程</h3>
-          <button type="button" class="cc-modal-close" aria-label="关闭" @click="showAuthorModal = false">
+          <h3 class="cc-modal-title">{{ $t('仙途教程') }}</h3>
+          <button type="button" class="cc-modal-close" :aria-label="$t('关闭')" @click="showAuthorModal = false">
             <X :size="18" />
           </button>
         </div>
@@ -193,26 +193,26 @@
         <div class="cc-modal-body">
           <div class="help-intro">
             <span class="help-version">V{{ displayVersion }}</span>
-            <p class="help-desc">AI驱动的沉浸式修仙文字冒险游戏</p>
+            <p class="help-desc">{{ $t('AI驱动的沉浸式修仙文字冒险游戏') }}</p>
           </div>
 
           <a href="https://ddct.top/" target="_blank" rel="noopener noreferrer" class="help-link-card">
             <Globe :size="18" />
-            <span>查看官网介绍</span>
+            <span>{{ $t('查看官网介绍') }}</span>
             <ArrowRight :size="16" />
           </a>
 
           <div class="help-tip">
             <Lightbulb :size="16" />
-            <span>游玩尽量使用推荐预设，了解原理后可自行调整</span>
+            <span>{{ $t('游玩尽量使用推荐预设，了解原理后可自行调整') }}</span>
           </div>
 
           <section>
-            <h4 class="cc-section-title">核心功能</h4>
+            <h4 class="cc-section-title">{{ $t('核心功能') }}</h4>
             <div class="help-features">
               <span v-for="f in helpFeatures" :key="f.label">
                 <component :is="f.icon" :size="15" />
-                {{ f.label }}
+                {{ $t(f.label) }}
               </span>
             </div>
           </section>
@@ -257,6 +257,7 @@ import { useCharacterStore } from './stores/characterStore';
 import { useUIStore } from './stores/uiStore';
 import { useGameStateStore } from './stores/gameStateStore';
 import { useTheme } from './composables/useTheme';
+import { useI18n } from './i18n';
 import { toast } from './utils/toast';
 import { getTavernHelper } from './utils/tavern'; // 添加导入
 import { isBackendConfigured } from '@/services/backendConfig';
@@ -265,6 +266,7 @@ import type { CharacterBaseInfo } from '@/types/game';
 import type { CharacterCreationPayload, Talent } from '@/types';
 
 // --- 响应式状态定义 ---
+const { t } = useI18n();
 const isLoggedIn = ref(false);
 const { isDark, toggleTheme } = useTheme();
 const isFullscreenMode = ref(localStorage.getItem('fullscreen') === 'true');
@@ -409,23 +411,24 @@ const handleCreationComplete = async (rawPayload: CharacterCreationPayload) => {
   }
 
   const onlyContinents = !!creationStore.worldGenerationConfig?.generateOnlyContinents;
-  const worldName = (rawPayload.world as { name?: string } | undefined)?.name;
+  const rawWorldName = (rawPayload.world as { name?: string } | undefined)?.name;
+  const worldName = rawWorldName ? t(rawWorldName) : '';
   uiStore.startStagedLoading({
-    title: '铸造法身',
+    title: t('铸造法身'),
     onCancel: requestCreationCancel,
     subtitle: [rawPayload.characterName, worldName].filter(Boolean).join(' · '),
     stages: [
-      { key: 'prepare', label: '推演命格', hint: '计算先天属性、出身与年岁', glyph: '命' },
-      { key: 'world', label: '开辟天地', hint: onlyContinents ? 'AI 勾勒大陆格局' : 'AI 生成大陆、势力与地点', glyph: '界' },
+      { key: 'prepare', label: t('推演命格'), hint: t('计算先天属性、出身与年岁'), glyph: '命' },
+      { key: 'world', label: t('开辟天地'), hint: onlyContinents ? t('AI 勾勒大陆格局') : t('AI 生成大陆、势力与地点'), glyph: '界' },
       ...(creationStore.splitResponseGeneration
         ? [
-            { key: 'story', label: '书写开篇', hint: 'AI 撰写开局正文', glyph: '章' },
-            { key: 'commands', label: '推演指令', hint: 'AI 生成状态、物品、位置等指令', glyph: '令' },
+            { key: 'story', label: t('书写开篇'), hint: t('AI 撰写开局正文'), glyph: '章' },
+            { key: 'commands', label: t('推演指令'), hint: t('AI 生成状态、物品、位置等指令'), glyph: '令' },
           ]
-        : [{ key: 'story', label: '书写开篇', hint: 'AI 撰写开局剧情与指令', glyph: '章' }]),
-      { key: 'apply', label: '落定因果', hint: '执行剧情指令、校准属性', glyph: '契' },
-      { key: 'save', label: '铭刻道籍', hint: '合并数据、写入存档', glyph: '籍', cancelable: false },
-      { key: 'enter', label: '踏入仙途', hint: '载入游戏界面', glyph: '启', cancelable: false },
+        : [{ key: 'story', label: t('书写开篇'), hint: t('AI 撰写开局剧情与指令'), glyph: '章' }]),
+      { key: 'apply', label: t('落定因果'), hint: t('执行剧情指令、校准属性'), glyph: '契' },
+      { key: 'save', label: t('铭刻道籍'), hint: t('合并数据、写入存档'), glyph: '籍', cancelable: false },
+      { key: 'enter', label: t('踏入仙途'), hint: t('载入游戏界面'), glyph: '启', cancelable: false },
     ],
   });
 
@@ -547,24 +550,24 @@ const handleCreationComplete = async (rawPayload: CharacterCreationPayload) => {
       // 检查是否是用户主动取消的错误
       if (errorMessage.includes('用户选择终止角色创建') || errorMessage.includes('用户选择不继续重试')) {
         console.log('[角色创建] 用户主动取消创建流程');
-        toast.info('角色创建已取消');
+        toast.info(t('角色创建已取消'));
         return false; // 用户取消，返回到角色创建页面
       }
 
       // 其他错误，询问用户是否重试
       return new Promise((resolve) => {
         uiStore.showRetryDialog({
-          title: '角色创建失败',
-          message: `角色创建过程中遇到问题：\n\n${errorMessage}\n\n是否重新尝试创建角色？`,
-          confirmText: '重新创建',
-          cancelText: '返回主页重新开始',
+          title: t('角色创建失败'),
+          message: `${t('角色创建失败')}：\n\n${errorMessage}`,
+          confirmText: t('重新创建'),
+          cancelText: t('返回主页重新开始'),
           onConfirm: async () => {
             console.log('[角色创建] 用户选择重新创建');
             resolve(await attemptCreation()); // 递归重试，使用相同的charId
           },
           onCancel: () => {
             console.log('[角色创建] 用户选择返回主页重新开始');
-            toast.info('已返回主页，可重新开始生成');
+            toast.info(t('已返回主页，可重新开始生成'));
             creationStore.resetCharacter();
             router.push('/');
             resolve(false);

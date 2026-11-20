@@ -444,6 +444,7 @@ const themeOptions: { value: ThemePreference; label: string; icon: typeof Sun }[
 ];
 
 const languageOptions = [
+  { value: 'vi', label: 'Tiếng Việt' },
   { value: 'zh', label: '中文' },
   { value: 'en', label: 'English' },
 ] as const;
@@ -489,7 +490,7 @@ const leadingOptions: { value: NarrativeLeading; label: string }[] = [
 const characterStore = useCharacterStore();
 const gameStateStore = useGameStateStore();
 const uiStore = useUIStore();
-const changeLanguage = (lang: 'zh' | 'en') => {
+const changeLanguage = (lang: 'zh' | 'en' | 'vi') => {
   if (currentLanguage.value === lang) return;
   setLanguage(lang);
   toast.success(t('语言设置已更新'));
