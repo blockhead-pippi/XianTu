@@ -28,8 +28,12 @@ export function trimApiBase(url: string): string {
 }
 
 export function joinApiUrl(base: string, path: string): string {
-  const root = trimApiBase(base);
+  let root = trimApiBase(base);
   const suffix = path.startsWith('/') || path.startsWith('?') ? path : `/${path}`;
+  // 兼容用户在地址末尾填写了 /v1 的情况（如 OpenRouter 的 .../api/v1），避免拼成 /v1/v1/...
+  if (root && suffix.startsWith('/v1/') && /\/v1$/i.test(root)) {
+    root = root.replace(/\/v1$/i, '');
+  }
   return root ? `${root}${suffix}` : suffix;
 }
 
@@ -174,13 +178,10 @@ export function previewApiRequest(provider: APIProvider, rawUrl: string, model?:
   let warning = '';
   if (base) {
     const lower = base.toLowerCase();
-    const doubledV1 = path.startsWith('/v1/') && /\/v1$/i.test(base);
     const alreadyPathed = /\/(chat\/completions|messages|embeddings)(\/|$)/i.test(lower)
       || /:(stream)?generatecontent/i.test(lower)
       || /\/v1beta\/models\//i.test(lower);
-    if (doubledV1) {
-      warning = '地址末尾已经是 /v1，请求时还会再拼一次下面的路径。地址只填到域名即可。';
-    } else if (alreadyPathed) {
+    if (alreadyPathed) {
       warning = '地址里已经写了接口路径。这里只填服务根地址，后面的路径由程序拼接。';
     }
   }
